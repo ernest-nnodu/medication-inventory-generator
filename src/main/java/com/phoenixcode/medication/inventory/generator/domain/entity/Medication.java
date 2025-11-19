@@ -24,4 +24,8 @@ public class Medication {
     private String form;
     private String strength;
     private String dose;
+
+    @ManyToOne
+    @JoinColumn(name = "resident_id")
+    private Resident resident;
 }

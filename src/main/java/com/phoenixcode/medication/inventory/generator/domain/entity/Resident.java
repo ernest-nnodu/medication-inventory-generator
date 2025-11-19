@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,5 +24,8 @@ public class Resident {
     private String firstName;
     private String lastName;
     private String serviceName;
+
+    @OneToMany(mappedBy = "resident")
+    private List<Medication> medications;
 
 }
