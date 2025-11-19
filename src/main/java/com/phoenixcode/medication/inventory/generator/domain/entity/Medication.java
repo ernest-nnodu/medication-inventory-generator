@@ -9,19 +9,19 @@ import lombok.NoArgsConstructor;
 import java.util.UUID;
 
 @Entity
-@Table(name = "residents")
+@Table(name = "medications")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class Resident {
+public class Medication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String firstName;
-    private String lastName;
-    private String serviceName;
-
+    private String name;
+    private String form;
+    private String strength;
+    private String dose;
 }
