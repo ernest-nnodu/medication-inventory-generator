@@ -25,6 +25,10 @@ public class Resident {
     private String lastName;
     private String serviceName;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User owner;
+
     @OneToMany(mappedBy = "resident")
     private List<Medication> medications;
 
