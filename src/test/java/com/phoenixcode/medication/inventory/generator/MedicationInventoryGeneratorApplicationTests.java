@@ -9,5 +9,4 @@ class MedicationInventoryGeneratorApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
