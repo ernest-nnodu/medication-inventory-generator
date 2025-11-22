@@ -2,6 +2,7 @@ package com.phoenixcode.medication.inventory.generator.service.impl;
 
 import com.phoenixcode.medication.inventory.generator.domain.dto.CreateResidentDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
+import com.phoenixcode.medication.inventory.generator.domain.dto.UpdateResidentDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
 import com.phoenixcode.medication.inventory.generator.service.ResidentService;
@@ -36,5 +37,18 @@ public class ResidentServiceImpl implements ResidentService {
         Resident resident = modelMapper.map(residentDto, Resident.class);
         Resident savedResident = residentRepository.save(resident);
         return modelMapper.map(savedResident, ResidentResponseDto.class);
+    }
+
+    @Override
+    public ResidentResponseDto updateResident(UpdateResidentDto residentDto) {
+
+        Resident residentToUpdate = residentRepository.findById(residentDto.getId()).get();
+
+        residentToUpdate.setFirstName(residentDto.getFirstName());
+        residentToUpdate.setLastName(residentDto.getLastName());
+        residentToUpdate.setServiceName(residentDto.getServiceName());
+
+        Resident updatedResident = residentRepository.save(residentToUpdate);
+        return modelMapper.map(updatedResident, ResidentResponseDto.class);
     }
 }
