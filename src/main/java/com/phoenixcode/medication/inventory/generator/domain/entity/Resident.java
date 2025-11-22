@@ -29,7 +29,7 @@ public class Resident {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    @OneToMany(mappedBy = "resident")
+    @OneToMany(mappedBy = "resident", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Medication> medications;
 
 }

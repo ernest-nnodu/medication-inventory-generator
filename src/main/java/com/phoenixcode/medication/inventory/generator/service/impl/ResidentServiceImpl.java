@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ResidentServiceImpl implements ResidentService {
@@ -50,5 +51,11 @@ public class ResidentServiceImpl implements ResidentService {
 
         Resident updatedResident = residentRepository.save(residentToUpdate);
         return modelMapper.map(updatedResident, ResidentResponseDto.class);
+    }
+
+    @Override
+    public void deleteResident(UUID residentId) {
+        Resident residentToDelete = residentRepository.findById(residentId).get();
+        residentRepository.delete(residentToDelete);
     }
 }
