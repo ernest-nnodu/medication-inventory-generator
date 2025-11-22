@@ -1,5 +1,6 @@
 package com.phoenixcode.medication.inventory.generator.service.impl;
 
+import com.phoenixcode.medication.inventory.generator.domain.dto.CreateResidentDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
@@ -27,5 +28,13 @@ public class ResidentServiceImpl implements ResidentService {
         return residents.stream()
                 .map(resident -> modelMapper.map(resident, ResidentResponseDto.class))
                 .toList();
+    }
+
+    @Override
+    public ResidentResponseDto createResident(CreateResidentDto residentDto) {
+
+        Resident resident = modelMapper.map(residentDto, Resident.class);
+        Resident savedResident = residentRepository.save(resident);
+        return modelMapper.map(savedResident, ResidentResponseDto.class);
     }
 }
