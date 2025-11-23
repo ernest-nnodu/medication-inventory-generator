@@ -13,4 +13,5 @@ public interface MedicationService {
     MedicationResponseDto createMedication(CreateMedicationDto medicationDto, UUID resident_id);
     MedicationResponseDto getMedication(UUID medication_id);
     MedicationResponseDto updateMedication(UpdateMedicationDto medicationDto);
+    void deleteMedication(UUID medication_id);
 }
