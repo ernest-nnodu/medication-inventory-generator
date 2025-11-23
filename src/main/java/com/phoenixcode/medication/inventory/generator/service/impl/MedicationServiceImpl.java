@@ -44,4 +44,11 @@ public class MedicationServiceImpl implements MedicationService {
         Medication savedMedication = medicationRepository.save(medication);
         return modelMapper.map(savedMedication, MedicationResponseDto.class);
     }
+
+    @Override
+    public MedicationResponseDto getMedication(UUID medication_id) {
+
+        Medication medication = medicationRepository.findById(medication_id).get();
+        return modelMapper.map(medication, MedicationResponseDto.class);
+    }
 }
