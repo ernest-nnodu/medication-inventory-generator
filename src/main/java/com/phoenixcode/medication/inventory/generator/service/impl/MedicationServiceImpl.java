@@ -2,6 +2,7 @@ package com.phoenixcode.medication.inventory.generator.service.impl;
 
 import com.phoenixcode.medication.inventory.generator.domain.dto.CreateMedicationDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
+import com.phoenixcode.medication.inventory.generator.domain.dto.UpdateMedicationDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Medication;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
 import com.phoenixcode.medication.inventory.generator.repository.MedicationRepository;
@@ -50,5 +51,18 @@ public class MedicationServiceImpl implements MedicationService {
 
         Medication medication = medicationRepository.findById(medication_id).get();
         return modelMapper.map(medication, MedicationResponseDto.class);
+    }
+
+    @Override
+    public MedicationResponseDto updateMedication(UpdateMedicationDto medicationDto) {
+
+        Medication medicationToUpdate = medicationRepository.findById(medicationDto.getId()).get();
+        medicationToUpdate.setName(medicationDto.getName());
+        medicationToUpdate.setForm(medicationDto.getForm());
+        medicationToUpdate.setStrength(medicationDto.getStrength());
+        medicationToUpdate.setDose(medicationDto.getDose());
+
+        Medication savedMedication = medicationRepository.save(medicationToUpdate);
+        return modelMapper.map(savedMedication, MedicationResponseDto.class);
     }
 }
