@@ -1,6 +1,33 @@
 package com.phoenixcode.medication.inventory.generator.service.impl;
 
+import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
+import com.phoenixcode.medication.inventory.generator.domain.entity.Medication;
+import com.phoenixcode.medication.inventory.generator.repository.MedicationRepository;
+import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
 import com.phoenixcode.medication.inventory.generator.service.MedicationService;
+import org.modelmapper.ModelMapper;
+
+import java.util.List;
+import java.util.UUID;
 
 public class MedicationServiceImpl implements MedicationService {
+
+    private final MedicationRepository medicationRepository;
+    private final ResidentRepository residentRepository;
+    private final ModelMapper modelMapper;
+
+    public MedicationServiceImpl(MedicationRepository medicationRepository, ResidentRepository residentRepository, ModelMapper modelMapper) {
+        this.medicationRepository = medicationRepository;
+        this.residentRepository = residentRepository;
+        this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public List<MedicationResponseDto> getAllMedication(UUID resident_id) {
+
+        List<Medication> medications = medicationRepository.findAllByResidentId(resident_id);
+        return medications.stream()
+                .map(medication -> modelMapper.map(medication, MedicationResponseDto.class))
+                .toList();
+    }
 }
