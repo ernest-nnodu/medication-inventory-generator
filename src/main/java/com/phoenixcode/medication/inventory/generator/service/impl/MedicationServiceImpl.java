@@ -1,8 +1,7 @@
 package com.phoenixcode.medication.inventory.generator.service.impl;
 
-import com.phoenixcode.medication.inventory.generator.domain.dto.CreateMedicationDto;
+import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
-import com.phoenixcode.medication.inventory.generator.domain.dto.UpdateMedicationDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Medication;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
 import com.phoenixcode.medication.inventory.generator.repository.MedicationRepository;
@@ -35,11 +34,11 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto createMedication(CreateMedicationDto medicationDto, UUID resident_id) {
+    public MedicationResponseDto createMedication(MedicationRequestDto medicationRequestDto, UUID resident_id) {
 
         Resident resident = residentRepository.findById(resident_id).get();
 
-        Medication medication = modelMapper.map(medicationDto, Medication.class);
+        Medication medication = modelMapper.map(medicationRequestDto, Medication.class);
         medication.setResident(resident);
 
         Medication savedMedication = medicationRepository.save(medication);
@@ -54,13 +53,13 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto updateMedication(UpdateMedicationDto medicationDto) {
+    public MedicationResponseDto updateMedication(UUID medicationId, MedicationRequestDto medicationRequestDto) {
 
-        Medication medicationToUpdate = medicationRepository.findById(medicationDto.getId()).get();
-        medicationToUpdate.setName(medicationDto.getName());
-        medicationToUpdate.setForm(medicationDto.getForm());
-        medicationToUpdate.setStrength(medicationDto.getStrength());
-        medicationToUpdate.setDose(medicationDto.getDose());
+        Medication medicationToUpdate = medicationRepository.findById(medicationId).get();
+        medicationToUpdate.setName(medicationRequestDto.getName());
+        medicationToUpdate.setForm(medicationRequestDto.getForm());
+        medicationToUpdate.setStrength(medicationRequestDto.getStrength());
+        medicationToUpdate.setDose(medicationRequestDto.getDose());
 
         Medication savedMedication = medicationRepository.save(medicationToUpdate);
         return modelMapper.map(savedMedication, MedicationResponseDto.class);
