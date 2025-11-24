@@ -1,12 +1,11 @@
 package com.phoenixcode.medication.inventory.generator.controller;
 
+import com.phoenixcode.medication.inventory.generator.domain.dto.CreateResidentDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
 import com.phoenixcode.medication.inventory.generator.service.ResidentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +24,12 @@ public class ResidentController {
 
         List<ResidentResponseDto> residentResponseDtos = residentService.getAllResident();
         return new ResponseEntity<>(residentResponseDtos, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<ResidentResponseDto> createResident(@RequestBody CreateResidentDto residentDto) {
+
+        ResidentResponseDto residentResponseDto = residentService.createResident(residentDto);
+        return new ResponseEntity<>(residentResponseDto, HttpStatus.CREATED);
     }
 }
