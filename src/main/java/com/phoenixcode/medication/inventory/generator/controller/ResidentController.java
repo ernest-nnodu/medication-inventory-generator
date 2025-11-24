@@ -48,4 +48,11 @@ public class ResidentController {
         ResidentResponseDto residentResponseDto = residentService.updateResident(id, residentRequestDto);
         return new ResponseEntity<>(residentResponseDto, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteResident(@PathVariable UUID id) {
+
+        residentService.deleteResident(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
