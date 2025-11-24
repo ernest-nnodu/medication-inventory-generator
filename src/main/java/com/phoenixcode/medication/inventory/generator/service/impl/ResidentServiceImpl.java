@@ -1,8 +1,7 @@
 package com.phoenixcode.medication.inventory.generator.service.impl;
 
-import com.phoenixcode.medication.inventory.generator.domain.dto.CreateResidentDto;
+import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
-import com.phoenixcode.medication.inventory.generator.domain.dto.UpdateResidentDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
 import com.phoenixcode.medication.inventory.generator.service.ResidentService;
@@ -33,21 +32,28 @@ public class ResidentServiceImpl implements ResidentService {
     }
 
     @Override
-    public ResidentResponseDto createResident(CreateResidentDto residentDto) {
+    public ResidentResponseDto createResident(ResidentRequestDto residentRequestDto) {
 
-        Resident resident = modelMapper.map(residentDto, Resident.class);
+        Resident resident = modelMapper.map(residentRequestDto, Resident.class);
         Resident savedResident = residentRepository.save(resident);
         return modelMapper.map(savedResident, ResidentResponseDto.class);
     }
 
     @Override
-    public ResidentResponseDto updateResident(UpdateResidentDto residentDto) {
+    public ResidentResponseDto getResident(UUID residentId) {
 
-        Resident residentToUpdate = residentRepository.findById(residentDto.getId()).get();
+        Resident resident = residentRepository.findById(residentId).get();
+        return modelMapper.map(resident, ResidentResponseDto.class);
+    }
 
-        residentToUpdate.setFirstName(residentDto.getFirstName());
-        residentToUpdate.setLastName(residentDto.getLastName());
-        residentToUpdate.setServiceName(residentDto.getServiceName());
+    @Override
+    public ResidentResponseDto updateResident(UUID residentId, ResidentRequestDto residentRequestDto) {
+
+        Resident residentToUpdate = residentRepository.findById(residentId).get();
+
+        residentToUpdate.setFirstName(residentRequestDto.getFirstName());
+        residentToUpdate.setLastName(residentRequestDto.getLastName());
+        residentToUpdate.setServiceName(residentRequestDto.getServiceName());
 
         Resident updatedResident = residentRepository.save(residentToUpdate);
         return modelMapper.map(updatedResident, ResidentResponseDto.class);

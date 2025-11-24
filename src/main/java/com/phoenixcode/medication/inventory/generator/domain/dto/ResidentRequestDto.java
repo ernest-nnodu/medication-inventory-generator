@@ -1,20 +1,16 @@
 package com.phoenixcode.medication.inventory.generator.domain.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class UpdateResidentDto {
+public class ResidentRequestDto {
 
-    private UUID id;
     private String firstName;
     private String lastName;
     private String serviceName;
