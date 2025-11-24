@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/residents")
@@ -31,5 +32,12 @@ public class ResidentController {
 
         ResidentResponseDto residentResponseDto = residentService.createResident(residentDto);
         return new ResponseEntity<>(residentResponseDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ResidentResponseDto> getResident(@PathVariable UUID id) {
+
+        ResidentResponseDto residentResponseDto = residentService.getResident(id);
+        return new ResponseEntity<>(residentResponseDto, HttpStatus.OK);
     }
 }

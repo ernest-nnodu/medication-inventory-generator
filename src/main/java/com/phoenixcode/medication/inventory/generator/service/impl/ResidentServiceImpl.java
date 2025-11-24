@@ -41,6 +41,13 @@ public class ResidentServiceImpl implements ResidentService {
     }
 
     @Override
+    public ResidentResponseDto getResident(UUID residentId) {
+
+        Resident resident = residentRepository.findById(residentId).get();
+        return modelMapper.map(resident, ResidentResponseDto.class);
+    }
+
+    @Override
     public ResidentResponseDto updateResident(UpdateResidentDto residentDto) {
 
         Resident residentToUpdate = residentRepository.findById(residentDto.getId()).get();
