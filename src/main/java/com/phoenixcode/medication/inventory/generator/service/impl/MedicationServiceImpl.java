@@ -8,10 +8,12 @@ import com.phoenixcode.medication.inventory.generator.repository.MedicationRepos
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
 import com.phoenixcode.medication.inventory.generator.service.MedicationService;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class MedicationServiceImpl implements MedicationService {
 
     private final MedicationRepository medicationRepository;
