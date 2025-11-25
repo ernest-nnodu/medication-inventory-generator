@@ -17,5 +17,4 @@ public class MedicationRequestDto {
     private String form;
     private String strength;
     private String dose;
-    private UUID residentId;
 }
