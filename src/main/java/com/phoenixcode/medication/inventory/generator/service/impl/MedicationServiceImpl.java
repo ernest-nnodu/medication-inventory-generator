@@ -36,7 +36,7 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto createMedication(MedicationRequestDto medicationRequestDto, UUID resident_id) {
+    public MedicationResponseDto createMedication(UUID resident_id, MedicationRequestDto medicationRequestDto) {
 
         Resident resident = residentRepository.findById(resident_id).get();
 

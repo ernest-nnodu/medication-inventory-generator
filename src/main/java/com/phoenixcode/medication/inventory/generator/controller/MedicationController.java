@@ -1,12 +1,11 @@
 package com.phoenixcode.medication.inventory.generator.controller;
 
+import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
 import com.phoenixcode.medication.inventory.generator.service.MedicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,5 +24,13 @@ public class MedicationController {
 
         List<MedicationResponseDto> medicationResponseDtos = medicationService.getAllMedication(residentId);
         return new ResponseEntity<>(medicationResponseDtos, HttpStatus.OK);
+    }
+
+    @PostMapping("/residents/{residentId}/medications")
+    public ResponseEntity<MedicationResponseDto> createMedication(@PathVariable UUID residentId,
+                                                                  @RequestBody MedicationRequestDto medicationRequestDto) {
+
+        MedicationResponseDto medicationResponseDto = medicationService.createMedication(residentId, medicationRequestDto);
+        return new ResponseEntity<>(medicationResponseDto, HttpStatus.CREATED);
     }
 }
