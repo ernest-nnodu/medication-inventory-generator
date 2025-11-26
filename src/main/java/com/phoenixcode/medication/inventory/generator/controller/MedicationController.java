@@ -33,4 +33,12 @@ public class MedicationController {
         MedicationResponseDto medicationResponseDto = medicationService.createMedication(residentId, medicationRequestDto);
         return new ResponseEntity<>(medicationResponseDto, HttpStatus.CREATED);
     }
+
+    @GetMapping("/residents/{residentId}/medications/{medicationId}")
+    public ResponseEntity<MedicationResponseDto> getMedication(@PathVariable UUID residentId,
+                                                               @PathVariable UUID medicationId) {
+
+        MedicationResponseDto medicationResponseDto = medicationService.getMedication(residentId, medicationId);
+        return new ResponseEntity<>(medicationResponseDto, HttpStatus.OK);
+    }
 }

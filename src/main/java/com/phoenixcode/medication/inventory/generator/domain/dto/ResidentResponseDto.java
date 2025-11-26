@@ -19,5 +19,5 @@ public class ResidentResponseDto {
     private String firstName;
     private String lastName;
     private String serviceName;
-    private List<Medication> medications;
+    private List<MedicationResponseDto> medications;
 }

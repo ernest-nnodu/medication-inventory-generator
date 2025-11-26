@@ -48,9 +48,9 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto getMedication(UUID medication_id) {
+    public MedicationResponseDto getMedication(UUID residentId, UUID medicationId) {
 
-        Medication medication = medicationRepository.findById(medication_id).get();
+        Medication medication = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
         return modelMapper.map(medication, MedicationResponseDto.class);
     }
 
