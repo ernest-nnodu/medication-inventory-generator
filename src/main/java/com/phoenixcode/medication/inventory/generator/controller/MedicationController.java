@@ -54,4 +54,12 @@ public class MedicationController {
 
         return new ResponseEntity<>(medicationResponseDto, HttpStatus.OK);
     }
+
+    @DeleteMapping("/residents/{residentId}/medications/{medicationId}")
+    public  ResponseEntity<HttpStatus> deleteMedication(@PathVariable UUID residentId,
+                                                        @PathVariable UUID medicationId) {
+
+        medicationService.deleteMedication(residentId, medicationId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
