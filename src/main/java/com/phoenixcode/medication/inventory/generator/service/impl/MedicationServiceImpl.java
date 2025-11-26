@@ -55,9 +55,9 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto updateMedication(UUID medicationId, MedicationRequestDto medicationRequestDto) {
+    public MedicationResponseDto updateMedication(UUID residentId, UUID medicationId, MedicationRequestDto medicationRequestDto) {
 
-        Medication medicationToUpdate = medicationRepository.findById(medicationId).get();
+        Medication medicationToUpdate = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
         medicationToUpdate.setName(medicationRequestDto.getName());
         medicationToUpdate.setForm(medicationRequestDto.getForm());
         medicationToUpdate.setStrength(medicationRequestDto.getStrength());

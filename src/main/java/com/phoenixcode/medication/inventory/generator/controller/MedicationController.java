@@ -41,4 +41,17 @@ public class MedicationController {
         MedicationResponseDto medicationResponseDto = medicationService.getMedication(residentId, medicationId);
         return new ResponseEntity<>(medicationResponseDto, HttpStatus.OK);
     }
+
+    @PutMapping("/residents/{residentId}/medications/{medicationId}")
+    public ResponseEntity<MedicationResponseDto> updateMedication(@PathVariable UUID residentId,
+                                                                  @PathVariable UUID medicationId,
+                                                                  @RequestBody MedicationRequestDto medicationRequestDto) {
+
+        MedicationResponseDto medicationResponseDto = medicationService.updateMedication(
+                residentId,
+                medicationId,
+                medicationRequestDto);
+
+        return new ResponseEntity<>(medicationResponseDto, HttpStatus.OK);
+    }
 }
