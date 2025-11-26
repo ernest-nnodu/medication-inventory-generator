@@ -8,10 +8,12 @@ import com.phoenixcode.medication.inventory.generator.repository.MedicationRepos
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
 import com.phoenixcode.medication.inventory.generator.service.MedicationService;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class MedicationServiceImpl implements MedicationService {
 
     private final MedicationRepository medicationRepository;
@@ -34,7 +36,7 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto createMedication(MedicationRequestDto medicationRequestDto, UUID resident_id) {
+    public MedicationResponseDto createMedication(UUID resident_id, MedicationRequestDto medicationRequestDto) {
 
         Resident resident = residentRepository.findById(resident_id).get();
 
@@ -46,16 +48,16 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto getMedication(UUID medication_id) {
+    public MedicationResponseDto getMedication(UUID residentId, UUID medicationId) {
 
-        Medication medication = medicationRepository.findById(medication_id).get();
+        Medication medication = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
         return modelMapper.map(medication, MedicationResponseDto.class);
     }
 
     @Override
-    public MedicationResponseDto updateMedication(UUID medicationId, MedicationRequestDto medicationRequestDto) {
+    public MedicationResponseDto updateMedication(UUID residentId, UUID medicationId, MedicationRequestDto medicationRequestDto) {
 
-        Medication medicationToUpdate = medicationRepository.findById(medicationId).get();
+        Medication medicationToUpdate = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
         medicationToUpdate.setName(medicationRequestDto.getName());
         medicationToUpdate.setForm(medicationRequestDto.getForm());
         medicationToUpdate.setStrength(medicationRequestDto.getStrength());
@@ -66,8 +68,8 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public void deleteMedication(UUID medication_id) {
-        Medication medicationToDelete = medicationRepository.findById(medication_id).get();
+    public void deleteMedication(UUID residentId, UUID medication_id) {
+        Medication medicationToDelete = medicationRepository.findByIdAndResidentId(medication_id, residentId).get();
         medicationRepository.delete(medicationToDelete);
     }
 }
