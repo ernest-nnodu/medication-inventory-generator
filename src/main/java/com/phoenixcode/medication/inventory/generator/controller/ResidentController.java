@@ -3,6 +3,7 @@ package com.phoenixcode.medication.inventory.generator.controller;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
 import com.phoenixcode.medication.inventory.generator.service.ResidentService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class ResidentController {
     }
 
     @PostMapping
-    public ResponseEntity<ResidentResponseDto> createResident(@RequestBody ResidentRequestDto residentRequestDto) {
+    public ResponseEntity<ResidentResponseDto> createResident(@Valid @RequestBody ResidentRequestDto residentRequestDto) {
 
         ResidentResponseDto residentResponseDto = residentService.createResident(residentRequestDto);
         return new ResponseEntity<>(residentResponseDto, HttpStatus.CREATED);
@@ -43,7 +44,7 @@ public class ResidentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ResidentResponseDto> updateResident(@PathVariable UUID id,
-                                                              @RequestBody ResidentRequestDto residentRequestDto) {
+                                                              @Valid @RequestBody ResidentRequestDto residentRequestDto) {
 
         ResidentResponseDto residentResponseDto = residentService.updateResident(id, residentRequestDto);
         return new ResponseEntity<>(residentResponseDto, HttpStatus.OK);
