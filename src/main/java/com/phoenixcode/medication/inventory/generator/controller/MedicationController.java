@@ -3,6 +3,7 @@ package com.phoenixcode.medication.inventory.generator.controller;
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
 import com.phoenixcode.medication.inventory.generator.service.MedicationService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class MedicationController {
 
     @PostMapping("/residents/{residentId}/medications")
     public ResponseEntity<MedicationResponseDto> createMedication(@PathVariable UUID residentId,
-                                                                  @RequestBody MedicationRequestDto medicationRequestDto) {
+                                                                  @Valid @RequestBody MedicationRequestDto medicationRequestDto) {
 
         MedicationResponseDto medicationResponseDto = medicationService.createMedication(residentId, medicationRequestDto);
         return new ResponseEntity<>(medicationResponseDto, HttpStatus.CREATED);
@@ -45,7 +46,7 @@ public class MedicationController {
     @PutMapping("/residents/{residentId}/medications/{medicationId}")
     public ResponseEntity<MedicationResponseDto> updateMedication(@PathVariable UUID residentId,
                                                                   @PathVariable UUID medicationId,
-                                                                  @RequestBody MedicationRequestDto medicationRequestDto) {
+                                                                  @Valid @RequestBody MedicationRequestDto medicationRequestDto) {
 
         MedicationResponseDto medicationResponseDto = medicationService.updateMedication(
                 residentId,
