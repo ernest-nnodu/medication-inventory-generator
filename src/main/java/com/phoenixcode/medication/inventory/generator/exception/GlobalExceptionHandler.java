@@ -31,6 +31,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
+    @ExceptionHandler(MedicationAndResidentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> MedicationAndResidentNotFoundExceptionHandler(MedicationAndResidentNotFoundException ex,
+                                                                                       WebRequest webRequest) {
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ErrorResponse errorResponse = generateResponse(ex, webRequest, status);
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
     private ErrorResponse generateResponse(Exception ex, WebRequest request, HttpStatus status) {
 
         return ErrorResponse.builder()

@@ -4,6 +4,7 @@ import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationReque
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Medication;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
+import com.phoenixcode.medication.inventory.generator.exception.MedicationAndResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.exception.ResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.repository.MedicationRepository;
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
@@ -51,7 +52,12 @@ public class MedicationServiceImpl implements MedicationService {
     @Override
     public MedicationResponseDto getMedication(UUID residentId, UUID medicationId) {
 
-        Medication medication = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
+        Medication medication = medicationRepository.findByIdAndResidentId(medicationId, residentId).orElseThrow(
+                () -> new MedicationAndResidentNotFoundException(
+                        String.format("Medication not found with id %s for resident with id %s",
+                        medicationId.toString(), residentId.toString()))
+        );
+
         return modelMapper.map(medication, MedicationResponseDto.class);
     }
 
