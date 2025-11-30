@@ -63,7 +63,7 @@ public class ResidentServiceImpl implements ResidentService {
 
     @Override
     public void deleteResident(UUID residentId) {
-        Resident residentToDelete = residentRepository.findById(residentId).get();
+        Resident residentToDelete = getExisitingResident(residentId);
         residentRepository.delete(residentToDelete);
     }
 
