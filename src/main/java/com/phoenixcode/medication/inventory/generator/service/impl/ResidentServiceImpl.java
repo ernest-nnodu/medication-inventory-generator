@@ -43,16 +43,15 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public ResidentResponseDto getResident(UUID residentId) {
 
-        Resident resident = residentRepository.findById(residentId).orElseThrow(
-                () -> new ResidentNotFoundException("Resident not found with Id: " + residentId)
-        );
+        Resident resident = getExisitingResident(residentId);
+
         return modelMapper.map(resident, ResidentResponseDto.class);
     }
 
     @Override
     public ResidentResponseDto updateResident(UUID residentId, ResidentRequestDto residentRequestDto) {
 
-        Resident residentToUpdate = residentRepository.findById(residentId).get();
+        Resident residentToUpdate = getExisitingResident(residentId);
 
         residentToUpdate.setFirstName(residentRequestDto.getFirstName());
         residentToUpdate.setLastName(residentRequestDto.getLastName());
@@ -67,4 +66,12 @@ public class ResidentServiceImpl implements ResidentService {
         Resident residentToDelete = residentRepository.findById(residentId).get();
         residentRepository.delete(residentToDelete);
     }
+
+    private Resident getExisitingResident(UUID residentId) {
+
+        return residentRepository.findById(residentId).orElseThrow(
+                () -> new ResidentNotFoundException("Resident not found with Id: " + residentId)
+        );
+    }
+
 }
