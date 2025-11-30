@@ -71,8 +71,8 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public void deleteMedication(UUID residentId, UUID medication_id) {
-        Medication medicationToDelete = medicationRepository.findByIdAndResidentId(medication_id, residentId).get();
+    public void deleteMedication(UUID residentId, UUID medicationId) {
+        Medication medicationToDelete = getResidentMedication(residentId, medicationId);
         medicationRepository.delete(medicationToDelete);
     }
 
