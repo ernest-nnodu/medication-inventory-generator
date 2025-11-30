@@ -52,11 +52,7 @@ public class MedicationServiceImpl implements MedicationService {
     @Override
     public MedicationResponseDto getMedication(UUID residentId, UUID medicationId) {
 
-        Medication medication = medicationRepository.findByIdAndResidentId(medicationId, residentId).orElseThrow(
-                () -> new MedicationAndResidentNotFoundException(
-                        String.format("Medication not found with id %s for resident with id %s",
-                        medicationId.toString(), residentId.toString()))
-        );
+        Medication medication = getResidentMedication(residentId, medicationId);
 
         return modelMapper.map(medication, MedicationResponseDto.class);
     }
@@ -64,7 +60,7 @@ public class MedicationServiceImpl implements MedicationService {
     @Override
     public MedicationResponseDto updateMedication(UUID residentId, UUID medicationId, MedicationRequestDto medicationRequestDto) {
 
-        Medication medicationToUpdate = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
+        Medication medicationToUpdate = getResidentMedication(residentId, medicationId);
         medicationToUpdate.setName(medicationRequestDto.getName());
         medicationToUpdate.setForm(medicationRequestDto.getForm());
         medicationToUpdate.setStrength(medicationRequestDto.getStrength());
@@ -84,6 +80,14 @@ public class MedicationServiceImpl implements MedicationService {
 
         return residentRepository.findById(residentId).orElseThrow(
                 () -> new ResidentNotFoundException("Resident not found with Id: " + residentId)
+        );
+    }
+
+    private Medication getResidentMedication(UUID residentId, UUID medicationId) {
+        return medicationRepository.findByIdAndResidentId(medicationId, residentId).orElseThrow(
+                () -> new MedicationAndResidentNotFoundException(
+                        String.format("Medication not found with id %s for resident with id %s",
+                                medicationId.toString(), residentId.toString()))
         );
     }
 }
