@@ -3,6 +3,7 @@ package com.phoenixcode.medication.inventory.generator.Exception;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -11,10 +12,9 @@ import java.util.List;
 @Builder
 public class ErrorResponse {
 
-    private LocalDate timestamp;
+    private LocalDateTime timestamp;
     private int status;
     private String error;
     private String message;
     private String path;
-    private List<String> details;
 }

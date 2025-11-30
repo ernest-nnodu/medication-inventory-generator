@@ -1,5 +1,6 @@
 package com.phoenixcode.medication.inventory.generator.service.impl;
 
+import com.phoenixcode.medication.inventory.generator.Exception.ResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
@@ -42,7 +43,9 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public ResidentResponseDto getResident(UUID residentId) {
 
-        Resident resident = residentRepository.findById(residentId).get();
+        Resident resident = residentRepository.findById(residentId).orElseThrow(
+                () -> new ResidentNotFoundException("Resident not found with Id: " + residentId)
+        );
         return modelMapper.map(resident, ResidentResponseDto.class);
     }
 
