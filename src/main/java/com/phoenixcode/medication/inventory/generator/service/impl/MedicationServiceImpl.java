@@ -4,6 +4,7 @@ import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationReque
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Medication;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
+import com.phoenixcode.medication.inventory.generator.exception.MedicationAlreadyExistsException;
 import com.phoenixcode.medication.inventory.generator.exception.MedicationAndResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.exception.ResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.repository.MedicationRepository;
@@ -39,6 +40,11 @@ public class MedicationServiceImpl implements MedicationService {
 
     @Override
     public MedicationResponseDto createMedication(UUID residentId, MedicationRequestDto medicationRequestDto) {
+
+        if (medicationRepository.existsByNameAndStrength(medicationRequestDto.getName(),
+                medicationRequestDto.getStrength())) {
+            throw new MedicationAlreadyExistsException("Medication with same name and strength already exist for the resident");
+        }
 
         Resident resident = getResident(residentId);
 

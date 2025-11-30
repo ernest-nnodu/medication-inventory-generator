@@ -41,6 +41,16 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
+    @ExceptionHandler(MedicationAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> medicationAlreadyExistsExceptionHandler(MedicationAlreadyExistsException ex,
+                                                                                 WebRequest webRequest) {
+
+        HttpStatus status = HttpStatus.CONFLICT;
+        ErrorResponse errorResponse = generateResponse(ex, webRequest, status);
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
     private ErrorResponse generateResponse(Exception ex, WebRequest request, HttpStatus status) {
 
         return ErrorResponse.builder()
