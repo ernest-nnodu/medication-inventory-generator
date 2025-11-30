@@ -4,6 +4,7 @@ import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationReque
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Medication;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
+import com.phoenixcode.medication.inventory.generator.exception.ResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.repository.MedicationRepository;
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
 import com.phoenixcode.medication.inventory.generator.service.MedicationService;
@@ -36,9 +37,9 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto createMedication(UUID resident_id, MedicationRequestDto medicationRequestDto) {
+    public MedicationResponseDto createMedication(UUID residentId, MedicationRequestDto medicationRequestDto) {
 
-        Resident resident = residentRepository.findById(resident_id).get();
+        Resident resident = getResident(residentId);
 
         Medication medication = modelMapper.map(medicationRequestDto, Medication.class);
         medication.setResident(resident);
@@ -71,5 +72,12 @@ public class MedicationServiceImpl implements MedicationService {
     public void deleteMedication(UUID residentId, UUID medication_id) {
         Medication medicationToDelete = medicationRepository.findByIdAndResidentId(medication_id, residentId).get();
         medicationRepository.delete(medicationToDelete);
+    }
+
+    private Resident getResident(UUID residentId) {
+
+        return residentRepository.findById(residentId).orElseThrow(
+                () -> new ResidentNotFoundException("Resident not found with Id: " + residentId)
+        );
     }
 }
