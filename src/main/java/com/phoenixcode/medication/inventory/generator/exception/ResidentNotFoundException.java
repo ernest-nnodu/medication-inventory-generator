@@ -1,4 +1,4 @@
-package com.phoenixcode.medication.inventory.generator.Exception;
+package com.phoenixcode.medication.inventory.generator.exception;
 
 public class ResidentNotFoundException extends RuntimeException {
 

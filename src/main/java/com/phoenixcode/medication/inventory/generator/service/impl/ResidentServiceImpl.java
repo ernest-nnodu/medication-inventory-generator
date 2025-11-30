@@ -1,6 +1,7 @@
 package com.phoenixcode.medication.inventory.generator.service.impl;
 
-import com.phoenixcode.medication.inventory.generator.Exception.ResidentNotFoundException;
+import com.phoenixcode.medication.inventory.generator.exception.ResidentAlreadyExistsException;
+import com.phoenixcode.medication.inventory.generator.exception.ResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
@@ -34,6 +35,11 @@ public class ResidentServiceImpl implements ResidentService {
 
     @Override
     public ResidentResponseDto createResident(ResidentRequestDto residentRequestDto) {
+
+        if (residentRepository.existsByFirstNameAndLastNameAndServiceName(residentRequestDto.getFirstName(),
+                residentRequestDto.getLastName(), residentRequestDto.getServiceName())) {
+            throw new ResidentAlreadyExistsException("A resident with the same name already exists in this service");
+        }
 
         Resident resident = modelMapper.map(residentRequestDto, Resident.class);
         Resident savedResident = residentRepository.save(resident);
