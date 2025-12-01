@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ResidentRepository extends JpaRepository<Resident, UUID> {
+
+    boolean existsByFirstNameAndLastNameAndServiceName(String firstName, String lastName, String serviceName);
 }

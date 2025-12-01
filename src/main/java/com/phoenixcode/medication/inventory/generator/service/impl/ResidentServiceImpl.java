@@ -1,5 +1,7 @@
 package com.phoenixcode.medication.inventory.generator.service.impl;
 
+import com.phoenixcode.medication.inventory.generator.exception.ResidentAlreadyExistsException;
+import com.phoenixcode.medication.inventory.generator.exception.ResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentRequestDto;
 import com.phoenixcode.medication.inventory.generator.domain.dto.ResidentResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
@@ -34,6 +36,11 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public ResidentResponseDto createResident(ResidentRequestDto residentRequestDto) {
 
+        if (residentRepository.existsByFirstNameAndLastNameAndServiceName(residentRequestDto.getFirstName(),
+                residentRequestDto.getLastName(), residentRequestDto.getServiceName())) {
+            throw new ResidentAlreadyExistsException("A resident with the same name already exists in this service");
+        }
+
         Resident resident = modelMapper.map(residentRequestDto, Resident.class);
         Resident savedResident = residentRepository.save(resident);
         return modelMapper.map(savedResident, ResidentResponseDto.class);
@@ -42,14 +49,15 @@ public class ResidentServiceImpl implements ResidentService {
     @Override
     public ResidentResponseDto getResident(UUID residentId) {
 
-        Resident resident = residentRepository.findById(residentId).get();
+        Resident resident = getExisitingResident(residentId);
+
         return modelMapper.map(resident, ResidentResponseDto.class);
     }
 
     @Override
     public ResidentResponseDto updateResident(UUID residentId, ResidentRequestDto residentRequestDto) {
 
-        Resident residentToUpdate = residentRepository.findById(residentId).get();
+        Resident residentToUpdate = getExisitingResident(residentId);
 
         residentToUpdate.setFirstName(residentRequestDto.getFirstName());
         residentToUpdate.setLastName(residentRequestDto.getLastName());
@@ -61,7 +69,15 @@ public class ResidentServiceImpl implements ResidentService {
 
     @Override
     public void deleteResident(UUID residentId) {
-        Resident residentToDelete = residentRepository.findById(residentId).get();
+        Resident residentToDelete = getExisitingResident(residentId);
         residentRepository.delete(residentToDelete);
     }
+
+    private Resident getExisitingResident(UUID residentId) {
+
+        return residentRepository.findById(residentId).orElseThrow(
+                () -> new ResidentNotFoundException("Resident not found with Id: " + residentId)
+        );
+    }
+
 }

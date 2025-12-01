@@ -4,6 +4,9 @@ import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationReque
 import com.phoenixcode.medication.inventory.generator.domain.dto.MedicationResponseDto;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Medication;
 import com.phoenixcode.medication.inventory.generator.domain.entity.Resident;
+import com.phoenixcode.medication.inventory.generator.exception.MedicationAlreadyExistsException;
+import com.phoenixcode.medication.inventory.generator.exception.MedicationAndResidentNotFoundException;
+import com.phoenixcode.medication.inventory.generator.exception.ResidentNotFoundException;
 import com.phoenixcode.medication.inventory.generator.repository.MedicationRepository;
 import com.phoenixcode.medication.inventory.generator.repository.ResidentRepository;
 import com.phoenixcode.medication.inventory.generator.service.MedicationService;
@@ -36,9 +39,14 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public MedicationResponseDto createMedication(UUID resident_id, MedicationRequestDto medicationRequestDto) {
+    public MedicationResponseDto createMedication(UUID residentId, MedicationRequestDto medicationRequestDto) {
 
-        Resident resident = residentRepository.findById(resident_id).get();
+        if (medicationRepository.existsByNameAndStrength(medicationRequestDto.getName(),
+                medicationRequestDto.getStrength())) {
+            throw new MedicationAlreadyExistsException("Medication with same name and strength already exist for the resident");
+        }
+
+        Resident resident = getResident(residentId);
 
         Medication medication = modelMapper.map(medicationRequestDto, Medication.class);
         medication.setResident(resident);
@@ -50,14 +58,15 @@ public class MedicationServiceImpl implements MedicationService {
     @Override
     public MedicationResponseDto getMedication(UUID residentId, UUID medicationId) {
 
-        Medication medication = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
+        Medication medication = getResidentMedication(residentId, medicationId);
+
         return modelMapper.map(medication, MedicationResponseDto.class);
     }
 
     @Override
     public MedicationResponseDto updateMedication(UUID residentId, UUID medicationId, MedicationRequestDto medicationRequestDto) {
 
-        Medication medicationToUpdate = medicationRepository.findByIdAndResidentId(medicationId, residentId).get();
+        Medication medicationToUpdate = getResidentMedication(residentId, medicationId);
         medicationToUpdate.setName(medicationRequestDto.getName());
         medicationToUpdate.setForm(medicationRequestDto.getForm());
         medicationToUpdate.setStrength(medicationRequestDto.getStrength());
@@ -68,8 +77,23 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
-    public void deleteMedication(UUID residentId, UUID medication_id) {
-        Medication medicationToDelete = medicationRepository.findByIdAndResidentId(medication_id, residentId).get();
+    public void deleteMedication(UUID residentId, UUID medicationId) {
+        Medication medicationToDelete = getResidentMedication(residentId, medicationId);
         medicationRepository.delete(medicationToDelete);
+    }
+
+    private Resident getResident(UUID residentId) {
+
+        return residentRepository.findById(residentId).orElseThrow(
+                () -> new ResidentNotFoundException("Resident not found with Id: " + residentId)
+        );
+    }
+
+    private Medication getResidentMedication(UUID residentId, UUID medicationId) {
+        return medicationRepository.findByIdAndResidentId(medicationId, residentId).orElseThrow(
+                () -> new MedicationAndResidentNotFoundException(
+                        String.format("Medication not found with id %s for resident with id %s",
+                                medicationId.toString(), residentId.toString()))
+        );
     }
 }
