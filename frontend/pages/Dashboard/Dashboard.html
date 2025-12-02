@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Medication Inventory</title>
+    <link rel="stylesheet" href="Dashboard.css">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h2>Medication Inventory</h2>
+    </div>
+
+    <nav class="navbar">
+        <a class="nav-link" href="#">Dashboard</a>
+        <a class="nav-link" href="#">Residents</a>
+        <a class="nav-link" href="#">Medications</a>
+        <a class="nav-link" href="#">Count Sheet</a>
+        <a class="nav-link" href="#">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <div class="card-container">
+        <div class="card" id="residents-card">
+            <h2>Residents</h2>
+            <p id="residents-count">0</p>
+        </div>
+
+        <div class="card" id="medications-card">
+            <h2>Medications</h2>
+            <p id="medications-count">0</p>
+        </div>
+
+        <div class="card" id="count-sheets-card">
+            <h2>Count Sheets</h2>
+            <p id="count-sheets-count">0</p>
+        </div>
+    </div>
+</main>
+
+<script src="Dashboard.js"></script>
+</body>
+</html>
