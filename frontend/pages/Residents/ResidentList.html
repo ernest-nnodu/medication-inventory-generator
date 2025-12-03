@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resident List</title>
+</head>
+<body>
+
+<header>
+    <h1>Residents</h1>
+</header>
+
+<main>
+
+    <div class="action-container">
+        <a>Return to Dashboard</a>
+        <button id="add-resident-btn">Add Resident</button>
+    </div>
+
+    <div id="residents-list-container">
+        <table id="residents-list">
+            <thead>
+                <tr>
+                    <th>Resident</th>
+                    <th>Service</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Sarah James</td>
+                    <td>Clinic</td>
+                    <td><button>View</button> <button>Edit</button> <button>[x]</button></td>
+                </tr>
+
+                <tr>
+                    <td>John Doe</td>
+                    <td>Apex Care</td>
+                    <td><button>View</button> <button>Edit</button> <button>[x]</button></td>
+                </tr>
+
+                <tr>
+                    <td>Mark Smith</td>
+                    <td>Gold Care</td>
+                    <td><button>View</button> <button>Edit</button> <button>[x]</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="emptyMessage">No residents found.</p>
+    </div>
+</main>
+</body>
+</html>
