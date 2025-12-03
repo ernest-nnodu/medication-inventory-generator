@@ -22,7 +22,7 @@ header h1 {
     justify-content: space-between;
     align-items: center;
     width: 800px;
-    margin: 80px auto;
+    margin: 50px auto;
 }
 
 .action-container a {
@@ -47,3 +47,61 @@ header h1 {
     border: none;
     border-radius: 10px;
 }
+
+.resident-list-container {
+    margin: 0 auto;
+    width: 900px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.resident-list-container p {
+    display: none;
+}
+
+.resident-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 2rem;
+    width: 400px;
+    border: 1px solid #007bff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px #007bff;
+}
+
+.resident-card .resident-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.resident-card .resident-actions button {
+    color: white;
+    border: none;
+    border-radius: 5px;
+    width: 50px;
+    height: 50px;
+    transition: 0.3s;
+}
+
+.resident-card .resident-actions button:hover {
+    box-shadow: 2px 2px 4px black;
+}
+
+.view-resident-btn {
+    background-color: forestgreen;
+}
+
+.edit-resident-btn {
+    background-color: darkorange;
+}
+
+.delete-resident-btn {
+    background-color: crimson;
+}
+
