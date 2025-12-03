@@ -18,36 +18,34 @@
         <button id="add-resident-btn">Add Resident</button>
     </div>
 
-    <div id="residents-list-container">
-        <table id="residents-list">
-            <thead>
-                <tr>
-                    <th>Resident</th>
-                    <th>Service</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr>
-                    <td>Sarah James</td>
-                    <td>Clinic</td>
-                    <td><button>View</button> <button>Edit</button> <button>[x]</button></td>
-                </tr>
-
-                <tr>
-                    <td>John Doe</td>
-                    <td>Apex Care</td>
-                    <td><button>View</button> <button>Edit</button> <button>[x]</button></td>
-                </tr>
-
-                <tr>
-                    <td>Mark Smith</td>
-                    <td>Gold Care</td>
-                    <td><button>View</button> <button>Edit</button> <button>[x]</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="resident-list-container">
+        <div class="resident-card">
+            <h2>John Doe</h2>
+            <h3>Apple Care</h3>
+            <div class="resident-actions">
+                <button class="view-resident-btn">View</button>
+                <button class="edit-resident-btn">Edit</button>
+                <button class="delete-resident-btn">Delete</button>
+            </div>
+        </div>
+        <div class="resident-card">
+            <h2>Mary Smith</h2>
+            <h3>Gold Care</h3>
+            <div class="resident-actions">
+                <button class="view-resident-btn">View</button>
+                <button class="edit-resident-btn">Edit</button>
+                <button class="delete-resident-btn">Delete</button>
+            </div>
+        </div>
+        <div class="resident-card">
+            <h2>Sarah James</h2>
+            <h3>Silver Care</h3>
+            <div class="resident-actions">
+                <button class="view-resident-btn">View</button>
+                <button class="edit-resident-btn">Edit</button>
+                <button class="delete-resident-btn">Delete</button>
+            </div>
+        </div>
         <p id="emptyMessage">No residents found.</p>
     </div>
 </main>
