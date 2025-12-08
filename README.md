@@ -1,12 +1,9 @@
-# Resident Medication Profile & 28-Day Count Sheet Generator
+# Medication Inventory Tracker
 
 ## Project Overview
-This is a **full-stack web application** designed to help residential care homes manage resident medications more accurately and efficiently. The system allows support staff to maintain digital medication profiles for each resident and automatically generate standardized 28-day medication count sheets.
+The **Medication Inventory Tracker** is a digital system designed to help residential care homes accurately monitor, record, and manage daily medication counts for each resident. The goal is to replace manual paper-based count sheets with a reliable, easy-to-use platform that improves safety, accountability, and transparency in medication management.
 
-**Key Goals:**
-- Eliminate common medication stock errors (missing items, incorrect strengths, incomplete lists).  
-- Provide a reliable, consistent 28-day count sheet reflecting true resident medication profiles.  
-- Streamline care staff workflow, reduce manual effort, and improve patient safety.
+This system provides real-time visibility of medication stock levels, tracks daily usage, logs administration events, and alerts staff when medication levels are running low or nearing expiry. It ensures compliance with care home medication standards while reducing administrative workload.
 
 ---
 
